@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tic Tac Toe</title>
+  
+  <!-- Google Fonts for 3D Retro Playful Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Shrikhand&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css"> 
+  <script src="script.js" defer></script>
+</head>
+<body>
+
+  <!-- Background Decorative Floating Candy Elements -->
+  <div class="candy-decor candy-1">O</div>
+  <div class="candy-decor candy-2">X</div>
+  <div class="candy-decor candy-3">O</div>
+  <div class="candy-decor candy-4">X</div>
+  <div class="candy-decor candy-5">O</div>
+
+  <div class="game-container">
+    
+    <!-- Header Title (Matches Image Styling) -->
+    <header class="title-container">
+      <h1 class="main-title">Tic Tac Toe</h1>
+    </header>
+
+    <!-- Game Mode & Player Name Setup Panel -->
+    <section class="setup-panel" id="setupPanel">
+      <div class="mode-selector">
+        <button id="singlePlayerBtn" class="btn mode-btn active">1 Player (vs AI)</button>
+        <button id="twoPlayerBtn" class="btn mode-btn">2 Players</button>
+      </div>
+
+      <div class="player-inputs">
+        <div class="input-group">
+          <label for="player1Input">Player X Name:</label>
+          <input type="text" id="player1Input" value="Player 1" maxlength="12">
+        </div>
+        <div class="input-group" id="player2Group">
+          <label for="player2Input">Player O Name:</label>
+          <input type="text" id="player2Input" value="Computer" maxlength="12">
+        </div>
+      </div>
+      
+      <button id="startGameBtn" class="btn action-btn start-btn">Start Game</button>
+    </section>
+
+    <!-- Scoreboard -->
+    <section class="scoreboard" id="scoreboard">
+      <div class="score-card player-x-card active-turn" id="cardX">
+        <span class="player-label" id="nameDisplayX">Player 1</span>
+        <span class="score-value" id="scoreX">0</span>
+      </div>
+      <div class="score-card ties-card">
+        <span class="player-label">Ties</span>
+        <span class="score-value" id="scoreTies">0</span>
+      </div>
+      <div class="score-card player-o-card" id="cardO">
+        <span class="player-label" id="nameDisplayO">Computer</span>
+        <span class="score-value" id="scoreO">0</span>
+      </div>
+    </section>
+
+    <!-- Status & Turn Messaging -->
+    <div class="game-status" id="gameStatus">Choose mode and start game!</div>
+
+    <!-- 3D Tic Tac Toe Board -->
+    <main class="board-frame">
+      <div class="board" id="board" role="grid" aria-label="Tic Tac Toe Board">
+        <button class="cell" data-index="0" aria-label="Cell 1"></button>
+        <button class="cell" data-index="1" aria-label="Cell 2"></button>
+        <button class="cell" data-index="2" aria-label="Cell 3"></button>
+        <button class="cell" data-index="3" aria-label="Cell 4"></button>
+        <button class="cell" data-index="4" aria-label="Cell 5"></button>
+        <button class="cell" data-index="5" aria-label="Cell 6"></button>
+        <button class="cell" data-index="6" aria-label="Cell 7"></button>
+        <button class="cell" data-index="7" aria-label="Cell 8"></button>
+        <button class="cell" data-index="8" aria-label="Cell 9"></button>
+      </div>
+    </main>
+
+    <!-- Control Buttons -->
+    <footer class="controls">
+      <button id="restartBtn" class="btn control-btn">Restart Round</button>
+      <button id="resetAllBtn" class="btn control-btn danger">Reset All</button>
+    </footer>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

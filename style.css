@@ -1,0 +1,409 @@
+/* ==========================================================================
+   Base & Resets
+   ========================================================================== */
+:root {
+  --bg-turquoise: #e95fa4f1;
+  --board-bg: #2b2e3f;
+  --grid-line: #a0a7bc;
+  
+  --yellow-main: #ffd119;
+  --yellow-shadow: #c98e00;
+  --yellow-highlight: #ffea70;
+
+  --purple-main: #a348e8;
+  --purple-shadow: #6d1bb0;
+  
+  --pink-main: #ff4785;
+  --pink-shadow: #ba124e;
+
+  --orange-main: #ff7e33;
+  --orange-shadow: #cc4d06;
+
+  --font-title: 'Shrikhand', cursive;
+  --font-body: 'Fredoka', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+}
+
+body {
+  min-height: 100vh;
+  background-color: var(--bg-turquoise);
+  font-family: var(--font-body);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: hidden;
+  position: relative;
+  padding: 20px;
+  transition: background-color 0.5s ease;
+}
+
+/* Background State Themes for Win/Loss */
+body.state-win {
+  background-color: #38ef7d;
+}
+
+body.state-loss {
+  background-color: #536976;
+  animation: shakeScreen 0.4s ease-in-out;
+}
+
+@keyframes shakeScreen {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-8px); }
+  40% { transform: translateX(8px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+}
+
+/* ==========================================================================
+   Background Decorative Elements
+   ========================================================================== */
+.candy-decor {
+  position: absolute;
+  font-family: var(--font-title);
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: bold;
+  opacity: 0.85;
+  pointer-events: none;
+  animation: float 6s ease-in-out infinite alternate;
+}
+
+.candy-1 { top: 15%; left: 8%; color: var(--pink-main); text-shadow: 3px 5px 0 var(--pink-shadow); transform: rotate(-15deg); }
+.candy-2 { bottom: 20%; left: 6%; color: var(--orange-main); text-shadow: 3px 5px 0 var(--orange-shadow); transform: rotate(20deg); animation-delay: -1.5s; }
+.candy-3 { top: 12%; right: 10%; color: var(--yellow-main); text-shadow: 3px 5px 0 var(--yellow-shadow); transform: rotate(12deg); animation-delay: -3s; }
+.candy-4 { bottom: 22%; right: 7%; color: var(--purple-main); text-shadow: 3px 5px 0 var(--purple-shadow); transform: rotate(-25deg); animation-delay: -4.5s; }
+
+@keyframes float {
+  0% { transform: translateY(0px) rotate(0deg); }
+  100% { transform: translateY(-18px) rotate(8deg); }
+}
+
+/* ==========================================================================
+   Container Layout
+   ========================================================================== */
+.game-container {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  z-index: 2;
+}
+
+/* Header Title (3D Curved Text Effect) */
+.main-title {
+  font-family: var(--font-title);
+  font-size: clamp(2.5rem, 7vw, 3.8rem);
+  color: var(--yellow-main);
+  text-align: center;
+  letter-spacing: 1.5px;
+  text-shadow: 
+    0px 2px 0px var(--yellow-highlight),
+    2px 4px 0px var(--yellow-shadow),
+    4px 7px 0px var(--purple-shadow),
+    5px 10px 15px rgba(0, 0, 0, 0.25);
+  transform: skewY(-2deg);
+  margin-bottom: 5px;
+}
+
+/* ==========================================================================
+   Setup Panel & Controls
+   ========================================================================== */
+.setup-panel {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 16px;
+  border-radius: 20px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15), inset 0 2px 0 #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.mode-selector, .player-inputs {
+  display: flex;
+  gap: 10px;
+}
+
+.input-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.input-group label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #444;
+}
+
+.input-group input {
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 2px solid #ddd;
+  font-family: var(--font-body);
+  font-weight: 600;
+  outline: none;
+}
+
+.btn {
+  border: none;
+  font-family: var(--font-body);
+  font-weight: 700;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  outline: none;
+}
+
+.mode-btn {
+  flex: 1;
+  padding: 10px;
+  background: #e2e8f0;
+  color: #475569;
+  font-size: 0.9rem;
+  box-shadow: 0 4px 0 #cbd5e1;
+}
+
+.mode-btn.active {
+  background: var(--purple-main);
+  color: #fff;
+  box-shadow: 0 4px 0 var(--purple-shadow);
+}
+
+.action-btn {
+  width: 100%;
+  padding: 12px;
+  background: var(--yellow-main);
+  color: #333;
+  font-size: 1.1rem;
+  box-shadow: 0 5px 0 var(--yellow-shadow);
+}
+
+.action-btn:active, .mode-btn:active, .control-btn:active {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 rgba(0,0,0,0.2) !important;
+}
+
+/* ==========================================================================
+   Scoreboard
+   ========================================================================== */
+.scoreboard {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.score-card {
+  flex: 1;
+  background: #fff;
+  border-radius: 16px;
+  padding: 10px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 6px 0 rgba(0,0,0,0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.player-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100px;
+}
+
+.score-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.player-x-card.active-turn {
+  border: 3px solid var(--purple-main);
+  transform: scale(1.05);
+}
+
+.player-o-card.active-turn {
+  border: 3px solid var(--pink-main);
+  transform: scale(1.05);
+}
+
+/* Score bounce animation on victory */
+.score-card.bounce-win {
+  animation: cardBounce 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes cardBounce {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.25) rotate(-5deg); }
+  100% { transform: scale(1); }
+}
+
+/* ==========================================================================
+   Game Status Banner
+   ========================================================================== */
+.game-status {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  height: 32px;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.game-status.animate-text {
+  animation: statusPulse 0.8s infinite alternate;
+}
+
+@keyframes statusPulse {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.1); }
+}
+
+/* ==========================================================================
+   3D Tic Tac Toe Board
+   ========================================================================== */
+.board-frame {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: var(--board-bg);
+  border-radius: 24px;
+  padding: 18px;
+  box-shadow: 
+    0 15px 25px rgba(0, 0, 0, 0.3),
+    inset 0 4px 6px rgba(255, 255, 255, 0.15),
+    inset 0 -6px 8px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease;
+}
+
+.board {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 12px;
+  background-color: var(--grid-line);
+  padding: 12px;
+  border-radius: 16px;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.6);
+}
+
+.cell {
+  background: var(--board-bg);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: var(--font-title);
+  font-size: clamp(2.5rem, 10vw, 4rem);
+  box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.4);
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.cell:hover:not([disabled]) {
+  background: #363a4f;
+}
+
+.cell.invalid-flash {
+  animation: flashRed 0.3s ease;
+}
+
+@keyframes flashRed {
+  0%, 100% { background: var(--board-bg); }
+  50% { background: #ff4d4d; }
+}
+
+/* Corrected X & O Mark Selectors */
+.cell[data-mark="X"] {
+  color: var(--purple-main);
+  text-shadow: 0 4px 0 var(--purple-shadow), 0 5px 10px rgba(0, 0, 0, 0.4);
+  animation: popIn 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.cell[data-mark="O"] {
+  color: var(--pink-main);
+  text-shadow: 0 4px 0 var(--pink-shadow), 0 5px 10px rgba(0, 0, 0, 0.4);
+  animation: popIn 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes popIn {
+  0% { transform: scale(0); opacity: 0; }
+  80% { transform: scale(1.15); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Highlight Winning Lines */
+.cell.winning-cell {
+  background: #3d435e;
+  animation: winGlow 0.6s infinite alternate;
+}
+
+@keyframes winGlow {
+  0% { transform: scale(1); box-shadow: 0 0 10px var(--yellow-main); }
+  100% { transform: scale(1.06); box-shadow: 0 0 25px var(--yellow-main); }
+}
+
+/* Confetti Animations */
+.confetti-particle {
+  position: fixed;
+  width: 12px;
+  height: 12px;
+  top: -20px;
+  z-index: 999;
+  border-radius: 3px;
+  animation: fall 2.5s ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(105vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+/* ==========================================================================
+   Footer Controls
+   ========================================================================== */
+.controls {
+  width: 100%;
+  display: flex;
+  gap: 12px;
+}
+
+.control-btn {
+  flex: 1;
+  padding: 12px;
+  background: #fff;
+  color: #333;
+  font-size: 1rem;
+  box-shadow: 0 4px 0 #cbd5e1;
+}
+
+.control-btn.danger {
+  background: #ffe4e6;
+  color: #e11d48;
+  box-shadow: 0 4px 0 #fecdd3;
+}
